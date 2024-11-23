@@ -14,9 +14,9 @@ double average_num(vector<int> numbers) {
 	return sum / numbers.size();
 }
 
-void print(string name, vector<int> numbers) {
-	cout << "	Ім'я:" << name << endl;
-	cout << "	Результати:";
+void print(string name, vector<string> numbers) {
+	cout << "	Назва:" << name << endl;
+	cout << "	Автор:";
 	for (int i = 0; i < numbers.size(); i++) {
 		cout << numbers[i] << " ";
 	}
@@ -28,22 +28,22 @@ int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	int choice;
-	int num;
+	string author;
 	double sum = 0;
 	string name;
-	vector<int> numbers;
+	vector<string> authors;
 
-	map<string, vector<int>> students;
+	map<string, vector<string>> lib;
 
-	
+
 	while (true) {
 		cout << "\n----------MENU------------\n";
-		cout << "1.Add to map new student" << endl;
-		cout << "2.Add new mark to a student" << endl;
-		cout << "3.Print average mark of student" << endl;
+		cout << "1.Add new book" << endl;
+		cout << "2.Find book by name" << endl;
+		cout << "3.Print lib" << endl;
 		cout << "4.Exit" << endl;
 		cout << "\n----------MENU------------\n";
-		
+
 		cin >> choice;
 
 		cin.ignore();
@@ -52,51 +52,46 @@ int main() {
 
 
 		case 1:
-			cout << "Введіть ім'я: ";
+			cout << "Введіть назву книги: ";
 			getline(cin, name);
-			cout << "Введіть оцінки (через пробіл): ";
+			cout << "Введіть авторів(через кому): ";
 
-			while (cin >> num) {
-				numbers.push_back(num);
+			while (cin >> author) {
+				authors.push_back(author);
 				if (cin.get() == '\n') {
 					break;
 				}
 			}
-			cout << "Додано студента:" << endl;
-			print(name, numbers);
+			cout << "Додано книгу:" << endl;
+			print(name,authors);
 
-			students.insert({ name,numbers });
+			lib.insert({name,authors});
+			authors.clear();
 			break;
 		case 2: {
-			string found_name;
-			int new_mark;
-			vector<int> arr;
-			cout << "Enter a name:"; getline(cin, found_name);
-			if (students.find(found_name) != students.end()) {
-				cout << "Enter a new mark:"; cin >> new_mark;
-				arr = students.find(found_name)->second;
-				arr.push_back(new_mark);
-				students[found_name] = arr;
-				print(found_name, arr);
+			string found_key;
+			cout << "Введіть назву книги:"; getline(cin, found_key);
+
+
+			cout << "Результат:" << endl;
+			for (auto i : lib) {
+				if(lib.find(found_key) != lib.end()){
+					print(i.first, i.second);
+				}
 			}
-			else {
-				cout << "No occurencies" << endl;
-			}
+
 			break;
-			}
+		}
 		case 3: {
-			string found_name;
-			vector<int> arr;
-			cout << "Enter a name:";
-			getline(cin, found_name);
-			if (students.find(found_name) != students.end()) {
-				cout << name << " : середній бал = " << average_num(students.find(found_name)->second);
-			}
-			else {
-				cout << "No occurencies" << endl;
+			cout << "Бібліотека:" << endl;
+			int k = 0;
+			for (auto i : lib) {
+				k++;
+				cout << k << ")";
+				print(i.first, i.second);
 			}
 			break;
-			}
+		}
 		case 4:
 			exit(0);
 		}
