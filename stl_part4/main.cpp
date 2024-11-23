@@ -50,6 +50,7 @@ int main() {
 
 		switch (choice) {
 
+
 		case 1:
 			cout << "Ââåä³òü ³ì'ÿ: ";
 			getline(cin, name);
